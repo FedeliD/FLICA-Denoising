@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#set -euC
+#trap 'echo Command failed, aborting!' ERR
+
+#set -v
+
+for S in 3
+do
+	FILE=GM_mod_merg_s$S.nii.gz
+	OUTFILE=GM_mod_merg_s${S}_4mm.nii.gz
+	if test -f $OUTFILE
+	then
+		echo "Skipping conversion from '$FILE' to '$OUTFILE', already exists!"
+		ls -l $FILE $OUTFILE
+		sleep 2
+	else
+		echo "Starting conversion from '$FILE' to '$OUTFILE'..."
+		flirt -in $FILE -ref $FILE -applyisoxfm 4 -out $OUTFILE &
+	fi
+	. waitfor 3
+done
+. waitfor 0
+echo Done downsampling.
+
+echo Making global mask...
+S=3
+OUTFILE=GM_mod_merg_s${S}_4mm.nii.gz
+MASKFILE=mask_GM_4mm.nii.gz
+fslmaths $OUTFILE -Tmean -thr 0.1 -bin $MASKFILE
+
+. waitfor 0
+for S in 3
+do 
+	OUTFILE=GM_mod_merg_s${S}_4mm.nii.gz
+	echo "Masking '$OUTFILE' with '$MASKFILE'..."
+	fslmaths $OUTFILE -mas $MASKFILE $OUTFILE &
+	. waitfor 3
+done
+. waitfor 0
+echo Done masking.
+
+echo All done!

@@ -1,0 +1,30 @@
+tkmedit started: Wed Jun 30 16:49:49 2010
+
+	tkmedit.bin fsaverage orig.mgz -aseg -ov subcort.prob.mgz -fthresh .1 -fmax 1 
+
+$Id: tkmedit.c,v 1.341 2010/05/13 19:34:35 greve Exp $ $Name:  $
+Set user home dir to /autofs/space/crash_001/users/greve/freesurferx86/subjects/fsaverage/mri
+Set subject home dir to /homes/4/greve/subjects/fsaverage
+mriFunctionalData:
+	msFileName=./subcort.prob.mgz
+	msRegistrationFileName=./
+	msSubjectName=
+	mpData->ps=1.000000
+	mpData->thick=1.000000
+	mpData->width=256
+	mpData->height=256
+	mpData->depth=256
+	mConvMethod=2
+	mNumTimePoints=1
+	mNumConditions=1
+	mbNullConditionPresent=0
+	mMaxValue=-10000.000000
+	mMinValue=10000.000000
+	mTimeResolution=1.000000
+	mNumPreStimTimePoints=0
+	mbErrorDataPresent=0
+	mNumBins=0
+
+Using interface file /space/crash/1/users/greve/freesurferx86/lib/tcl/tkmedit.tcl
+Tcl: Successfully parsed tkmedit.tcl
+Tcl: Successfully parsed tkm_functional.tcl

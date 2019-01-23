@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#set -euvC
+set -euC
+trap 'echo Command failed, aborting!' ERR
+
+#INSERT='s2_'
+INSERT=''
+
+#test -f mean_FA_${INSERT}skeleton_mask.nii.gz || exec echo "Create binary image using: fslmaths all_FA_${INSERT}skeletonised -Tstd -bin mean_FA_${INSERT}skeleton_mask"
+test -f mask_2mm_skeleton_norm.nii.gz || exec echo "Create 2mm image using the commented-out lines below."
+
+set -v
+#take mean_FA before skeletonizing and resample to 2 mm, then skeletonize that.or copy from Adrian's dataset
+#flirt -in mean_FA_${INSERT}skeleton_mask -ref mean_FA_${INSERT}skeleton_mask -applyisoxfm 2 -out mean_FA_${INSERT}skeleton_mask_2mm -datatype float 
+#fslmaths mean_FA_${INSERT}skeleton_mask_2mm -s 1 -thr 0.2 mean_FA_${INSERT}skeleton_mask_2mm
+# MUCH BETTER:
+#tbss_skeleton -i <non-binary-image> -o <binary-skeleton>
+#And now create mask_2mm_skeleton_norm.nii.gz by doing the same thing to the mean_FA_skeleton_mask (binary) as you do to all_FA_etc.
+for m in FA MD MO RD L1
+do
+  if test -f all_${m}_${INSERT}skeletonised_2mm.nii.gz
+  then
+    echo Skipping $m, already exists.
+  else
+    echo Downsampling $m...
+    flirt -in all_${m}_${INSERT}skeletonised -ref mask_2mm_skeleton_norm -applyisoxfm 2 -out all_${m}_${INSERT}skeletonised_2mm -datatype float 
+    fslmaths all_${m}_${INSERT}skeletonised_2mm -s 1 -div mask_2mm_skeleton_norm -mas mask_2mm_skeleton_norm all_${m}_${INSERT}skeletonised_2mm 
+    if [[ $m == MD ]] || [[ $m == L1 ]] || [[ $m == RD ]]
+    then
+      echo MULTIPLYING BY 500
+      fslmaths all_${m}_${INSERT}skeletonised_2mm -mul 500 all_${m}_${INSERT}skeletonised_2mm 
+    else
+      echo NOT MULTIPLYING BY 500
+    fi
+  fi
+done
+echo ' MIGHT ALSO NEED TO MULTIPLY L1 BY A CONSTANT!!! '
