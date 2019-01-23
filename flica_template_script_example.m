@@ -17,6 +17,7 @@ addpath /usr/local/fmrib/fmt/
 setenv('FREESURFER_HOME','/Applications/freesurfer/')
 setenv('SUBJECTS_DIR','/Users/lnickerson/Desktop/Collabs/SZ_lICA/SZ_FLICA_10_02_12/flica_patients')
 setenv('FSLOUTPUTTYPE','NIFTI_GZ')
+setenv('FSLDIR','/usr/local/FSL')
 %% Load data
 % Yfiles = {'file1.nii.gz', 'file2.mgh'};
 % NOTE that these should be downsampled to around 20k voxels in the mask,
