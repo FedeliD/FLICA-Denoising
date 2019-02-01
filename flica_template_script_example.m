@@ -1,6 +1,6 @@
 %% Demo script to run your own date through FLICA, more info based on the flica webside: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FLICA.
 
-%% some info should be chaged based on your own data, sunch as xx, xx,xx, the data path should be changed.
+%% some info should be chaged based on your own data, sunch as lines 5-6 in render_surfaces.sh, the data path should be changed; lines 30 and 56 in render_surfaces.sh, the number should be changed based on your own data.
 
 %% install ImageMagic, epstopdf first
 %% download flica from FSL webside, and put it under Matlab folder
