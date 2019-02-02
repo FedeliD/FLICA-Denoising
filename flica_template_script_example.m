@@ -29,14 +29,14 @@ Yfiles = {'all_FA_skeletonised.nii.gz.nii.gz', 'all_MD_skeletonised.nii.gz.nii.g
 %% Run FLICA
 clear opts
 % Define the component number
-opts.num_components = 25;  
+opts.num_components = 15;  
 % Define the number of iterations, Convergence is declared when the change in F per iteration drops below 0.1. Check the F for each iteration to define the iteration number.
 opts.maxits = 2000;
 
 Morig = flica(Y, opts);
 [M, weights] = flica_reorder(Morig);
 
-%% Save results, change it based your data
+%% Save results
 %outdir = '/Volumes/micc.mclean.harvard.edu/MJ_Data_Fusion/Reorg_Data/LICA_FINAL/licaout133_15com_MJ_FINAL/LICA_denoised/LICA_ALL6_13COM/';
 mkdir lica_rm_com8_15COM;
 outdir = '/Users/HJ/Desktop/LICA_struct_DTI46/licaout133_15com_highsmooth/LICA_denoised/lica_rm_com8_15COM/';
